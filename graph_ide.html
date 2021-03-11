@@ -1,0 +1,48 @@
+<style>
+  textarea{
+    position: absolute;
+  }
+</style>
+
+<div id="vue-app">
+  <svg height="2000" width="2000">
+    <line
+      v-for="edge in edges"
+      :x1="edge.node_a.style.left"
+      :y1="edge.node_a.style.top"
+      :x2="edge.node_b.style.left"
+      :y2="edge.node_b.style.top"
+      stroke=red
+    />
+  </svg>
+
+  <textarea
+    v-for="func_node in func_nodes"
+    :style="func_node.style">${func_node.text}</textarea>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<script>
+  new Vue({
+    el: "#vue-app",
+    delimiters: ['${', '}'],
+    data() {
+      const func_nodes = [
+        {
+          style: {left: 300, top: 200, width: 400, height: 100},
+          text: "def main():\n  hello_world()",
+        },
+        {
+          style: {left: 500, top: 400, width: 400, height: 100},
+          text: "def hello_world():\n  print('hello world')"
+        }
+      ]
+      return {
+        func_nodes: func_nodes,
+        edges: [
+          {node_a: func_nodes[0], node_b: func_nodes[1] }
+        ],
+      }
+    },
+  });
+</script>
